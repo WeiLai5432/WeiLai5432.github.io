@@ -1,0 +1,994 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="面经," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/avatar_.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前几天做了阿里的笔试题，被虐哭了。开始说时间是四十分钟，二十个选择题。做完了给了八十分钟的附加题。三道大题，第一题是在 SQL 语句里查找相关关键词的问题，第二题直接看不懂。第三题是设计一个数据结构。跪惨了。
+更一下鹅厂面试被虐的经历。
+周日早上五点起来去火车站。早上车少开得快，不到六点就到了。七点十分的火车。上了火车睡一会觉，看了看 C++ 和数据结构，中午十二点就到了。北京的天气很好。下车坐地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="腾讯面试回顾">
+<meta property="og:url" content="https://weilai5432.github.io/2016/04/24/腾讯面试回顾/index.html">
+<meta property="og:site_name" content="未来的部落格">
+<meta property="og:description" content="前几天做了阿里的笔试题，被虐哭了。开始说时间是四十分钟，二十个选择题。做完了给了八十分钟的附加题。三道大题，第一题是在 SQL 语句里查找相关关键词的问题，第二题直接看不懂。第三题是设计一个数据结构。跪惨了。
+更一下鹅厂面试被虐的经历。
+周日早上五点起来去火车站。早上车少开得快，不到六点就到了。七点十分的火车。上了火车睡一会觉，看了看 C++ 和数据结构，中午十二点就到了。北京的天气很好。下车坐地">
+<meta property="og:image" content="http://ww2.sinaimg.cn/mw690/97f32fe5jw1f38ayq2yulj22e036oqv5.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/97f32fe5jw1f38axempvyj22e036ohdt.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/mw690/97f32fe5jw1f38axgnrnnj22e036o4qp.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/97f32fe5jw1f38axmhlixj22e036o4qq.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/97f32fe5jw1f38axorfx9j236o2e01kx.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/97f32fe5jw1f38axr18akj22e036onpd.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/97f32fe5jw1f38axu69moj236o2e0qv5.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/97f32fe5jw1f38axy6rfvj236o2e0b29.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/97f32fe5jw1f38ayakn3mj236o2e0kjl.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/97f32fe5jw1f38axzlsp4j236o2e0khx.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/97f32fe5jw1f38ay121wmj236o2e01kx.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/97f32fe5jw1f38ay7adxkj236o2e01kx.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/97f32fe5jw1f38aybpgc6j22e036o4qp.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/97f32fe5jw1f38ayh2i35j22e036oqu2.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/97f32fe5jw1f38ayffed5j236o2e01kx.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/mw690/97f32fe5jw1f38aykg95tj236o2e0b29.jpg">
+<meta property="og:updated_time" content="2016-04-24T17:39:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="腾讯面试回顾">
+<meta name="twitter:description" content="前几天做了阿里的笔试题，被虐哭了。开始说时间是四十分钟，二十个选择题。做完了给了八十分钟的附加题。三道大题，第一题是在 SQL 语句里查找相关关键词的问题，第二题直接看不懂。第三题是设计一个数据结构。跪惨了。
+更一下鹅厂面试被虐的经历。
+周日早上五点起来去火车站。早上车少开得快，不到六点就到了。七点十分的火车。上了火车睡一会觉，看了看 C++ 和数据结构，中午十二点就到了。北京的天气很好。下车坐地">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/mw690/97f32fe5jw1f38ayq2yulj22e036oqv5.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6254124103754581000',
+      author: '我就是博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> 腾讯面试回顾 | 未来的部落格 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f4460b30808e9122d5baf84a8ca48530";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">未来的部落格</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">Weilai's blog</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://weilai5432.github.io/2016/04/24/腾讯面试回顾/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="魏来">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar_.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="未来的部落格">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="未来的部落格" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                腾讯面试回顾
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-04-24T22:11:05+08:00">
+                2016-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/日常/" itemprop="url" rel="index">
+                    <span itemprop="name">日常</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/24/腾讯面试回顾/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/24/腾讯面试回顾/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/04/24/腾讯面试回顾/" class="leancloud_visitors" data-flag-title="腾讯面试回顾">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前几天做了阿里的笔试题，被虐哭了。开始说时间是四十分钟，二十个选择题。做完了给了八十分钟的附加题。三道大题，第一题是在 SQL 语句里查找相关关键词的问题，第二题直接看不懂。第三题是设计一个数据结构。跪惨了。</p>
+<p>更一下鹅厂面试被虐的经历。</p>
+<p>周日早上五点起来去火车站。早上车少开得快，不到六点就到了。七点十分的火车。上了火车睡一会觉，看了看 C++ 和数据结构，中午十二点就到了。北京的天气很好。下车坐地铁到了面试酒店附近，还有一段时间，又没地方去，就随便走走了。</p>
+<p>先说面试。</p>
+<p>从 THU 坐公交到面试的酒店。通知我四点半面试，不到四点就到了。坐了一小会就听见念我的名字，然后就拿着号牌去面试。</p>
+<p>面试官挺年轻的，感觉人很 nice。问了我大概这么几个问题：（有些内容不记得了，顺序也忘了）</p>
+<p>第一个问题是，<strong>从底层实现角度来解释一下函数的调用。</strong></p>
+<p>这个问题应该是很基础的，但是无奈自己太渣不太清楚，隐约记得哪看过或者讲过，没办法。然后我就乱说一顿，面试官还提示了一下我，从汇编语言的角度解释。不懂就是没办法啦。</p>
+<blockquote>
+<p>简单地讲，函数（如strlen）的名称类似变量名称，指向内存中某个地址。区别在于变量指向的目标是某个<br>值，函数名指向的目标是某段代码。函数被调用前，调用者（如main）将当前代码执行位置压栈，然后跳向<br>内存中函数代码位置，，执行之后返回堆栈中保存的调用者（main）的原执行位置，弹栈后继续执行。<br>另，用户函数和系统函数在编译时一般是分开存放的。</p>
+</blockquote>
+<p>更详细的见：<a href="http://blog.chinaunix.net/uid-23069658-id-3981406.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-23069658-id-3981406.html</a></p>
+<p><strong>如何实现可变参数的函数？</strong></p>
+<p>这个真的不懂，其实和上一个问题是比较相关的，下面的问题也是。具体可以搜到。</p>
+<p><strong>函数的重载，覆盖，隐藏</strong></p>
+<p><strong>多继承会带来什么问题？</strong></p>
+<p><strong>了解内存对齐吗？</strong><br>这个跟上一个相关。</p>
+<p>然后他看了看我的简历，问了我一个经典的问题，<strong>链表和数组的区别，优缺点。</strong></p>
+<p>我大概说了一下，当我说到在内存中连续存放时，他问我这有什么好处，我说寻址和访问速度快，然后他引导性地问我，如果一个占用空间为4字节的参数，在内存中存放的位置不是4的整数倍，那么怎么办。这其实就是内存对齐的内容，面试官还提示我可以增加内存，然后引导性地问了我几个问题，比如 CPU 如何读写内存，访问某个地方需要几次等。最后告诉我这就是内存对齐。</p>
+<p><strong>物理内存和虚拟内存</strong><br>这个问题也是很经典的，不过我以前认为的虚拟内存的概念是不准确的。<a href="http://blog.chinaunix.net/uid-26983585-id-3364091.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26983585-id-3364091.html</a><br>还问我虚拟内存一定指向硬盘吗。</p>
+<p><strong>CPU 如何访问内存？</strong></p>
+<p><strong>这个问题记不清了，大概是一个很大的字符串数组（内存能存下），统计26个字母出现的次数</strong><br>后来上网搜了下，也是很经典的问题，就是先建一个26的数组，然后算字符串里的每个字符与a或A的差来确定下标。当时我提到了 map，好像还提到了hash。<br>中间我说好像 map 是哈希实现的，然后他比较惊讶问我那 STL 里面还有个 hash_map 是怎么实现的，我就懵了。<strong>其实 map 是红黑树实现的，效率是O(logn)</strong></p>
+<p><strong>如何评价一个哈希算法的好坏？</strong><br>我说了几个，比如哈希之后占用内存的大小，冲突的个数，哈希函数是否高效，其实还是挺接近的。还有能否将关键字均匀影射到哈希空间上，有无好的解决冲突的办法。</p>
+<p><strong>如果发生了冲突怎么办？</strong><br>我说了数组里的移位，他引导我说如果用链表呢，其实就是链接到同一个链表里。</p>
+<p><strong>哈希的时间复杂度？</strong><br>这个问题我都跪了，我一直想哈希函数去了。</p>
+<p><strong>了解哪些寻路算法？</strong><br>回答了 Djikstra，还有 A＊，但是我把 A＊ 和几率型算法搞混了，一不小心说漏嘴说出个随机数，然后赶紧改口说估价函数。他问我<strong>如何设置估价函数能确保一定能找到最优解？</strong>这个真心不懂。<a href="http://blog.itpub.net/490225/viewspace-832739/" target="_blank" rel="external">http://blog.itpub.net/490225/viewspace-832739/</a></p>
+<blockquote>
+<p>A*（A-Star)算法是一种静态路网中求解最短路最有效的方法。<br>公式表示为： f(n)=g(n)+h(n),<br>其中f(n) 是节点n从初始点到目标点的估价函数，<br>g(n) 是在状态空间中从初始节点到n节点的实际代价，<br>h(n)是从n到目标节点最佳路径的估计代价。<br>保证找到最短路径（最优解的）条件，关键在于估价函数h(n)的选取：<br>估价值h(n)&lt;= n到目标节点的距离实际值，这种情况下，搜索的点数多，搜索范围大，效率低。但能得到最优解。<br>如果 估价值&gt;实际值, 搜索的点数少，搜索范围小，效率高，但不能保证得到最优解。<br>估价值与实际值越接近，估价函数取得就越好。</p>
+</blockquote>
+<p><strong>接触过网络编程吗？用过什么协议？</strong><br>其实不太懂，但是也算做过网络相关的东西，就说做过，http 协议（其实只是接收 json 而已，我自以为是 http 协议，其实好像不是）。然后问我 http 协议是长链接还是短链接？我不懂瞎猜是长链接，然后面试官表现得很惊讶。<a href="http://www.cnblogs.com/sunada2005/p/3304593.html" target="_blank" rel="external">http://www.cnblogs.com/sunada2005/p/3304593.html</a></p>
+<p><strong>了解哪些常用的软件设计模式？</strong><br>这个问题我确实没学过相关的内容，他提示我说比如单例模式，这个方法我知道，但不知道是一种设计模式。其它的就不知道了。<a href="http://blog.csdn.net/xsl1990/article/details/16359289" target="_blank" rel="external">http://blog.csdn.net/xsl1990/article/details/16359289</a></p>
+<p><strong>了解内存泄漏吗？</strong></p>
+<p><strong>引用计数与内存回收</strong><br>这个问题好像也很经典，但是我不懂。我大概说了一下 MRC 和 ARC，其实只是说了实用的区别，具体的机制我也不了解。</p>
+<p><strong>了解栈溢出吗？</strong><br><strong>了解栈溢出攻击吗？</strong><br>之前确实不懂，只知道程序写挫了运行时编译器会报错。<a href="http://www.cnblogs.com/fanzhidongyzby/archive/2013/08/10/3250405.html" target="_blank" rel="external">http://www.cnblogs.com/fanzhidongyzby/archive/2013/08/10/3250405.html</a></p>
+<p><strong>写程序的时候要优化它的性能和内存占用吧？</strong><br><strong>用过什么内存和性能优化软件？</strong><br>这个没用过呀，只是看过 Xcode 里自带的那个。<br><strong>你做过 iOS 难道没用过 instruments 吗？</strong><br>额，没有。（其实 instruments 就是 Xcode 里自带的…）</p>
+<p>这个时候面试已经接近尾声了，我自己都坐不住了。对我这样的渣渣，面试官已经足够有耐心了，然后又问了我几个象征性的问题。</p>
+<p><strong>你最近做的最有成就感的事是什么？（技术方面的）</strong><br>我大概想了想有成就感的就是题目 AC 了吧但是又好久没刷题，没想起来最近做过啥难题。比赛成绩也不太拿得出手，就说了刚做的那个 iOS 项目。然后他问我<strong>这个项目的技术难点是什么？</strong>我就懵了，遇到的难点太多了但是都是因为自己渣，于是就说具体实现的时候卡了一些问题。</p>
+<p><strong>最近看过什么技术书籍？</strong><br>我回答刚开始看《机器学习》，然后他有点疑惑地问我为什么要看机器学习？我说了解了一下之后比较感兴趣就开始看了。他问我<strong>你对自己的职业生涯规划是什么？</strong>显然我对自己并没有清晰的职业规划，就说目前是啥都想学，以后可能做算法或者相关的方向吧。</p>
+<p><strong>你还有什么问题？</strong><br>我问他我啥时候能收到通知，他说这两天。我又问<strong>您觉得我有哪些需要提高的地方？</strong>他说基础知识应该夯实。可能是因为我的这个问题，他想再给我一次机会，就又问我笔试题怎么做的，我开始有点不明白，就说在宿舍做的啊，他说是自己做的吧？我说是啊。他问<strong>笔试题里有一道关于死锁的问题，里面提到了银行家算法，你说一下这个银行家算法是怎样的。</strong>然后我就懵了说不了解。他说<strong>你笔试遇到了问题也没有去查吗？</strong>这个问题我浑身冷汗，基本算是宣判了结果了。我只好说笔试涉及的问题比较多没有太多时间，当然了这个理由很苍白。</p>
+<p>出了酒店感觉非常失落。感谢面试官的耐心，人真的很 nice。我也认识到自己有夺渣，明显欠学习。</p>
+<p>晚上在腾讯视频大楼，就是播 NBA 的地方。我误以为季后赛还没开打，就没想着去找解说合影啥的。</p>
+<p>抽空查了下微信的面试状态，毫无意外地跪了。</p>
+<p>几张照片：<br>北京的天气很好。<br><img src="http://ww2.sinaimg.cn/mw690/97f32fe5jw1f38ayq2yulj22e036oqv5.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/mw690/97f32fe5jw1f38axempvyj22e036ohdt.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/mw690/97f32fe5jw1f38axgnrnnj22e036o4qp.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/97f32fe5jw1f38axmhlixj22e036o4qq.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/97f32fe5jw1f38axorfx9j236o2e01kx.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/97f32fe5jw1f38axr18akj22e036onpd.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/97f32fe5jw1f38axu69moj236o2e0qv5.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/97f32fe5jw1f38axy6rfvj236o2e0b29.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/97f32fe5jw1f38ayakn3mj236o2e0kjl.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/mw690/97f32fe5jw1f38axzlsp4j236o2e0khx.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/97f32fe5jw1f38ay121wmj236o2e01kx.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/97f32fe5jw1f38ay7adxkj236o2e01kx.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/97f32fe5jw1f38aybpgc6j22e036o4qp.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/97f32fe5jw1f38ayh2i35j22e036oqu2.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/97f32fe5jw1f38ayffed5j236o2e01kx.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/mw690/97f32fe5jw1f38aykg95tj236o2e0b29.jpg" alt=""></p>
+<p>回来好好学习，刷基础知识。另外谁知道怎么恶补或者速成类似上面的面试相关知识，请告诉我，谢谢！</p>
+<p>近期准备夏令营。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面经/" rel="tag"># 面经</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/16/近期总结/" rel="next" title="近期总结">
+                <i class="fa fa-chevron-left"></i> 近期总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/19/挖几个坑等着填/" rel="prev" title="挖几个坑等着填">
+                挖几个坑等着填 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/04/24/腾讯面试回顾/"
+     data-title="腾讯面试回顾"
+     data-content=""
+     data-url="https://weilai5432.github.io/2016/04/24/腾讯面试回顾/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/24/腾讯面试回顾/"
+           data-title="腾讯面试回顾" data-url="https://weilai5432.github.io/2016/04/24/腾讯面试回顾/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar_.jpg"
+               alt="魏来" />
+          <p class="site-author-name" itemprop="name">魏来</p>
+          <p class="site-description motion-element" itemprop="description">一个人要像一支队伍。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/WeiLai5432" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2549297125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:weilai5432@gmail.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiuyuliang.cn" title="Yuliang's Blog" target="_blank">Yuliang's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnilin15.github.io" title="cnilin" target="_blank">cnilin</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.waydrow.com" title="Waydrow" target="_blank">Waydrow</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.it592.com" title="Double L && Dream" target="_blank">Double L && Dream</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuchong.me" title="Jark's Blog" target="_blank">Jark's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://liam0205.me" title="始终" target="_blank">始终</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ouc.edu.cn" title="中国海洋大学" target="_blank">中国海洋大学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hubojing.github.io" title="胡博靖" target="_blank">胡博靖</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xwjgo.github.io" title="许文江" target="_blank">许文江</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dannylee1991.github.io" title="DannyLee" target="_blank">DannyLee</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.hsmouc.com" title="梦的小窝" target="_blank">梦的小窝</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.logcg.com" title="Log everything" target="_blank">Log everything</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏来</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    </br>本站总访问量<span id="busuanzi_value_site_pv"></span>次&nbsp;
+</span>
+
+<span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weilai5432"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("b0MJ9oTgepKIR5B4xrqpcQjV-gzGzoHsz", "qI7KdMAjw3OxBWvFuS5wiHlD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

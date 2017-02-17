@@ -66,7 +66,7 @@ MAC上的LaTex部署，一般是两条思路，一个是直接安装MacTex，自
 <meta property="og:site_name" content="未来的部落格">
 <meta property="og:description" content="最近对LateX有点兴趣，想开始学习一下，以后做简历、编辑公式、写论文都能用得到。在网上看到了这部分内容，转载过来，有删改，原文见这里。
 MAC上的LaTex部署，一般是两条思路，一个是直接安装MacTex，自带编写环境什么的；另一个是Sublime Text（或者Textmate等其他编辑器）+LaTexTools插件。方式二其实也是需要依赖MacTex的，但相对来说体量小、不需要经常切换编辑器">
-<meta property="og:updated_time" content="2016-03-07T13:26:38.000Z">
+<meta property="og:updated_time" content="2017-02-17T09:30:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="部署 Mac 上的Sublime Text + LaTex中文环境">
 <meta name="twitter:description" content="最近对LateX有点兴趣，想开始学习一下，以后做简历、编辑公式、写论文都能用得到。在网上看到了这部分内容，转载过来，有删改，原文见这里。
@@ -345,7 +345,7 @@ MAC上的LaTex部署，一般是两条思路，一个是直接安装MacTex，自
       
         <p>最近对LateX有点兴趣，想开始学习一下，以后做简历、编辑公式、写论文都能用得到。<br>在网上看到了这部分内容，转载过来，有删改，原文见<a href="http://www.readern.com/sublime-text-latex-chinese-under-mac.html" target="_blank" rel="external">这里</a>。</p>
 <p>MAC上的LaTex部署，一般是两条思路，一个是直接安装MacTex，自带编写环境什么的；另一个是Sublime Text（或者Textmate等其他编辑器）+LaTexTools插件。方式二其实也是需要依赖MacTex的，但相对来说体量小、不需要经常切换编辑器，所以果断的介绍方式二。</p>
-<p>##安装步骤</p>
+<p>安装步骤：</p>
 <ol>
 <li>首先需要安装Sublime Text 2/3和Package Control，这个有大把的帖子。</li>
 <li>MacTex现在是一个2G+的大包子，其实里面很多东西我们不需要，所以本着节约精神，我们安装MacTex_Basic包就行了，现在的版本大概是100M以内。这个安装也是傻瓜的。<br>在Sublime Text里Command+Shift+P调出命令窗口，输入Install，之后选择LaTexTools，网络OK的话，很快就完成了插件安装。</li>
@@ -357,14 +357,15 @@ MAC上的LaTex部署，一般是两条思路，一个是直接安装MacTex，自
 <p>打开终端，运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo tlmgr update --self</div><div class="line">sudo tlmgr install latexmk</div></pre></td></tr></table></figure></p>
 <p>在ST里打开<code>LaTeXTools.sublime-settings</code>（也就是LaTeXTools的用户设置，如果你是从旧版本升级上来或者担心这个配置文件出现问题，可以依次点击<code>Preferences——Package Settings——LaTeXTools——Reconfigure LaTeXTools and migrate settings</code>重建配置文件），在<code>builder-settings</code>下面新增两项配置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&quot;program&quot; : &quot;xelatex&quot;,</div><div class="line">&quot;command&quot; : [&quot;latexmk&quot;, &quot;-cd&quot;, &quot;-e&quot;, &quot;$pdflatex = &apos;xelatex -interaction=nonstopmode -synctex=1 %S %O&apos;&quot;, &quot;-f&quot;, &quot;-pdf&quot;],</div></pre></td></tr></table></figure>
-<p>另外注意之前应该有”builder”: “default”（或直接设置为空或”traditional”）。</p>
+<p>另外注意之前应该有<code>&quot;builder&quot;: &quot;default&quot;</code>（或直接设置为空或”traditional”）。</p>
 <p>保存配置文件后关闭，重新编译一下，中文正常啦！</p>
-<p>最后再给一个个性化设置。上面写了，LaTeXTools默认调用Skim，这一方面是因为LaTeXTools是跨平台的插件，Skim也同样跨平台开源，另一方面Skim确实对LaTeX的PDF支持很好。但是用OS X的网友们其实还有个选择，就是调用系统默认的PDF程序来打开编译后的成果，特别是“预览”还是很好用的。目前LaTeXTools的开发者还没有给出设置方法，所以，仍然要靠改代码：<br>修改~/Library/Application\ Support/Sublime\ Text/Packages/LaTeXTools/jumpToPDF.py, 将其中if plat == ‘darwin’: 之后开始的两段直接注释掉，替换为：<br>subprocess.Popen([‘open’] + [pdffile])<br>同样保存后就生效啦。目前用起来，系统自带的预览还是能满足我的需求滴。</p>
+<p>LaTeXTools默认调用Skim来打开生成的PDF文件，如果你更喜欢使用OS X自带的“预览”，现在可以直接在用户设置中增加：<br><code>&quot;viewer&quot;: &quot;preview&quot;,</code></p>
+<p>(以下方法已废除）<br><del>最后再给一个个性化设置。上面写了，LaTeXTools默认调用Skim，这一方面是因为LaTeXTools是跨平台的插件，Skim也同样跨平台开源，另一方面Skim确实对LaTeX的PDF支持很好。但是用OS X的网友们其实还有个选择，就是调用系统默认的PDF程序来打开编译后的成果，特别是“预览”还是很好用的。目前LaTeXTools的开发者还没有给出设置方法，所以，仍然要靠改代码：<br>修改~/Library/Application\ Support/Sublime\ Text/Packages/LaTeXTools/jumpToPDF.py, 将其中if plat == ‘darwin’: 之后开始的两段直接注释掉，替换为：<br>subprocess.Popen([‘open’] + [pdffile])<br>同样保存后就生效啦。目前用起来，系统自带的预览还是能满足我的需求滴。</del></p>
 <p>测试代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">\documentclass&#123;article&#125;</div><div class="line">\usepackage&#123;fontspec, xunicode, xltxtra&#125;  </div><div class="line">\setmainfont&#123;Hiragino Sans GB&#125;  </div><div class="line"></div><div class="line">\title&#123;Title&#125;</div><div class="line">\author&#123;&#125;</div><div class="line"></div><div class="line">\begin&#123;document&#125;</div><div class="line"></div><div class="line">\maketitle&#123;&#125;</div><div class="line"></div><div class="line">\section&#123;Introduction&#125;</div><div class="line"></div><div class="line">This is where you will write your content. 在这里写上内容。</div><div class="line"></div><div class="line">\end&#123;document&#125;</div></pre></td></tr></table></figure>
 <p>LaTex的其他选择<br>如果觉得修改设置看起来很复杂，可以在每篇文档前增加%!TEX program = xelatex，这会强制使用xelatex，也是解决中文的一个方法。</p>
 <p>如果只是偶尔需要输入公式，这里介绍一个在线的LaTex公式编辑器<a href="http://www.codecogs.com/latex/eqneditor.php" target="_blank" rel="external">http://www.codecogs.com/latex/eqneditor.php</a></p>
-<p>有iPad的，你们有福了，还有个手写公式后自动识别、生成LaTex公式的App：MyScript MathPad。简单的使用已经足够了，如果需要经常使用，导出功能需要内购（4.99刀）。顺便说一句，这家公司的手写App都很强大，手写计算器、手写Notes都挺好用，而且不贵。</p>
+<p><a href="https://webdemo.myscript.com/views/math.html" target="_blank" rel="external">识别并转换数学公式的网站</a> </p>
 
       
     </div>
@@ -493,7 +494,7 @@ MAC上的LaTex部署，一般是两条思路，一个是直接安装MacTex，自
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -616,6 +617,10 @@ MAC上的LaTex部署，一般是两条思路，一个是直接安装MacTex，自
               
                 <li class="links-of-blogroll-item">
                   <a href="https://www.logcg.com" title="Log everything" target="_blank">Log everything</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://simtalk.cn" title="简说" target="_blank">简说</a>
                 </li>
               
             </ul>

@@ -1,0 +1,951 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="papers," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/avatar_.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="最近读了 ActiveClean 的论文 ActiveClean: Interactive Data Cleaning For Statistical Modeling，记录一下。
+ActiveClean 是一种交互式的关于统计模型的数据清洗方案。
+分析人员通常迭代式地进行数据清洗，然后根据清洗结果处理更多数据。ActiveClean 就是这样的迭代式的框架，同时，ActiveClean 保证了模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ActiveClean">
+<meta property="og:url" content="http://weilai5432.github.io/2017/10/09/ActiveClean/index.html">
+<meta property="og:site_name" content="未来的部落格">
+<meta property="og:description" content="最近读了 ActiveClean 的论文 ActiveClean: Interactive Data Cleaning For Statistical Modeling，记录一下。
+ActiveClean 是一种交互式的关于统计模型的数据清洗方案。
+分析人员通常迭代式地进行数据清洗，然后根据清洗结果处理更多数据。ActiveClean 就是这样的迭代式的框架，同时，ActiveClean 保证了模">
+<meta property="og:image" content="http://ojmhfvae7.bkt.clouddn.com/2017-10-09-15075534263614.jpg">
+<meta property="og:image" content="http://ojmhfvae7.bkt.clouddn.com/2017-10-09-15075536849063.jpg">
+<meta property="og:image" content="http://ojmhfvae7.bkt.clouddn.com/2018-01-12-15075542246070.jpg">
+<meta property="og:updated_time" content="2018-01-12T02:55:33.614Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ActiveClean">
+<meta name="twitter:description" content="最近读了 ActiveClean 的论文 ActiveClean: Interactive Data Cleaning For Statistical Modeling，记录一下。
+ActiveClean 是一种交互式的关于统计模型的数据清洗方案。
+分析人员通常迭代式地进行数据清洗，然后根据清洗结果处理更多数据。ActiveClean 就是这样的迭代式的框架，同时，ActiveClean 保证了模">
+<meta name="twitter:image" content="http://ojmhfvae7.bkt.clouddn.com/2017-10-09-15075534263614.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> ActiveClean | 未来的部落格 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f4460b30808e9122d5baf84a8ca48530";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">未来的部落格</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">Weilai's blog</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://weilai5432.github.io/2017/10/09/ActiveClean/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="魏来">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar_.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="未来的部落格">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="未来的部落格" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ActiveClean
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-09T20:38:32+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/09/ActiveClean/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/09/ActiveClean/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/10/09/ActiveClean/" class="leancloud_visitors" data-flag-title="ActiveClean">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近读了 ActiveClean 的论文 ActiveClean: Interactive Data Cleaning For Statistical Modeling，记录一下。</p>
+<p>ActiveClean 是一种交互式的关于统计模型的数据清洗方案。</p>
+<p>分析人员通常迭代式地进行数据清洗，然后根据清洗结果处理更多数据。ActiveClean 就是这样的迭代式的框架，同时，ActiveClean 保证了模型训练的收敛性。</p>
+<h1 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h1><p>脏数据会影响到模型训练的结果，而迭代式的数据训练也可能导致训练偏差甚至是在最简单的模型上出现很大误差。</p>
+<p><img src="http://ojmhfvae7.bkt.clouddn.com/2017-10-09-15075534263614.jpg" alt=""></p>
+<p>To summarize our contributions:</p>
+<p>• We propose ActiveClean, which allows for progressive data cleaning and statistical model training with guarantees.</p>
+<p>• Correctness We show how to update a dirty model given newly cleaned data. This update converges monotonically in 1 expectation with a with rate O( 1/√T ).</p>
+<p>• Optimizations We derive a theoretically optimal sampling distribution that minimizes the update error and an approximation to estimate the theoretical optimum. Our proposed optimizations can improve model accuracy by up-to 2.5x for the same amount of data cleaned.</p>
+<p>• Experiments The experiments evaluate ActiveClean on ﬁve datasets with real and synthetic corruption. In a fraud prediction example, ActiveClean examines nearly 10x fewer records than alternatives to achieve an 80% true positive rate.</p>
+<h1 id="SOLUTION"><a href="#SOLUTION" class="headerlink" title="SOLUTION"></a>SOLUTION</h1><h2 id="SYSTEM-ARCHITECTURE"><a href="#SYSTEM-ARCHITECTURE" class="headerlink" title="SYSTEM ARCHITECTURE"></a>SYSTEM ARCHITECTURE</h2><p>ActiveClean 的系统架构如下：</p>
+<p><img src="http://ojmhfvae7.bkt.clouddn.com/2017-10-09-15075536849063.jpg" alt="SYSTEM ARCHITECTURE"></p>
+<p>先从原始数据（含脏数据）上训练得到一个模型，然后运行迭代式的 ActiveClean，不断清洗数据并优化模型。</p>
+<p>下面一个个地介绍每个部分的原理；</p>
+<h2 id="UPDATER"><a href="#UPDATER" class="headerlink" title="UPDATER"></a>UPDATER</h2><p>我们的目标是根据从原始数据（含脏数据）上训练得到的模型$\theta$得到一个合理的新的 $\theta$，如图：</p>
+<p><img src="http://ojmhfvae7.bkt.clouddn.com/2018-01-12-15075542246070.jpg" alt=""></p>
+<p>最优的解即为图上的星号部分，也就是：（有时加正则化项r）<br>$$ \theta^* = arg\ min_\theta \sum_{i=1}^N \phi(x_i,y_i,\theta) + r(\theta) $$</p>
+<p>$ \phi $ 的定义就是机器学习里的 Cost 函数：<br>$$ \phi(x_i,y_i,\theta) = ||\theta^Tx_i-y_i||^2_2 $$</p>
+<p>（未完）</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/papers/" rel="tag"># papers</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/09/Linux-使用命令行登录校园网并在-OS-X-系统添加快捷键/" rel="next" title="Linux 使用命令行登录校园网并在 OS X 系统添加快捷键">
+                <i class="fa fa-chevron-left"></i> Linux 使用命令行登录校园网并在 OS X 系统添加快捷键
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/12/Docker-and-Gitlab/" rel="prev" title="Docker and Gitlab">
+                Docker and Gitlab <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTM3Mi81OTQw">
+  <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/10/09/ActiveClean/"
+           data-title="ActiveClean" data-url="http://weilai5432.github.io/2017/10/09/ActiveClean/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar_.jpg"
+               alt="魏来" />
+          <p class="site-author-name" itemprop="name">魏来</p>
+          <p class="site-description motion-element" itemprop="description">一个人要像一支队伍。</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="mailto:weilai5432@gmail.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiuyuliang.cn" title="Yuliang's Blog" target="_blank">Yuliang's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnilin15.github.io" title="cnilin" target="_blank">cnilin</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.waydrow.com" title="Waydrow" target="_blank">Waydrow</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.it592.com" title="Double L && Dream" target="_blank">Double L && Dream</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuchong.me" title="Jark's Blog" target="_blank">Jark's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://liam0205.me" title="始终" target="_blank">始终</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ouc.edu.cn" title="中国海洋大学" target="_blank">中国海洋大学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hubojing.github.io" title="胡博靖" target="_blank">胡博靖</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xwjgo.github.io" title="许文江" target="_blank">许文江</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dannylee1991.github.io" title="DannyLee" target="_blank">DannyLee</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.hsmouc.com" title="梦的小窝" target="_blank">梦的小窝</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.logcg.com" title="Log everything" target="_blank">Log everything</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://simtalk.cn" title="简说" target="_blank">简说</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://caoyudong.com/" title="BAZINGA" target="_blank">BAZINGA</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fuxuemingzhu.me" title="负雪明烛" target="_blank">负雪明烛</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.qiqiboy.com" title="qiqiboy" target="_blank">qiqiboy</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://jlunevermore.github.io" title="郭兰哲" target="_blank">郭兰哲</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://molunerfinn.com" title="MARKSZのBlog" target="_blank">MARKSZのBlog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://charlesliuyx.github.io" title="遥行 Go Further" target="_blank">遥行 Go Further</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.anotherhome.net" title="ANOTHERHOME" target="_blank">ANOTHERHOME</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">1.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SOLUTION"><span class="nav-number">2.</span> <span class="nav-text">SOLUTION</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SYSTEM-ARCHITECTURE"><span class="nav-number">2.1.</span> <span class="nav-text">SYSTEM ARCHITECTURE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPDATER"><span class="nav-number">2.2.</span> <span class="nav-text">UPDATER</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏来</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    </br>本站总访问量<span id="busuanzi_value_site_pv"></span>次&nbsp;
+</span>
+
+<span id="busuanzi_container_site_uv">
+      本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weilai5432"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("b0MJ9oTgepKIR5B4xrqpcQjV-gzGzoHsz", "qI7KdMAjw3OxBWvFuS5wiHlD");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
